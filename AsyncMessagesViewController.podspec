@@ -11,7 +11,6 @@ Pod::Spec.new do |spec|
   spec.documentation_url     = 'https://github.com/nguyenhuy/AsyncMessagesViewController'
   spec.platform              = :ios
   spec.ios.deployment_target = '9.0'
-  spec.swift_version         = '4.0'
   spec.requires_arc          = true  
   spec.source_files          = 'Source/**/*.swift'
   spec.ios.resource_bundle   = { spec => 'Source/Assets/AsyncMessagesViewController.xcassets' }
