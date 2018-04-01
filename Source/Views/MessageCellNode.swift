@@ -11,12 +11,12 @@ import AsyncDisplayKit
 
 let kAMMessageCellNodeAvatarImageSize: CGFloat = 34
 
-let kAMMessageCellNodeTopTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.lightGray,
-                                           NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12)]
-let kAMMessageCellNodeContentTopTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.lightGray,
-                                                  NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)]
-let kAMMessageCellNodeBottomTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.lightGray,
-                                              NSAttributedStringKey.font: UIFont.systemFont(ofSize: 11)]
+let kAMMessageCellNodeTopTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
+                                           NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12)]
+let kAMMessageCellNodeContentTopTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
+                                                  NSFontAttributeName: UIFont.systemFont(ofSize: 12)]
+let kAMMessageCellNodeBottomTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
+                                              NSFontAttributeName: UIFont.systemFont(ofSize: 11)]
 
 class MessageCellNode: ASCellNode {
     
@@ -27,15 +27,15 @@ class MessageCellNode: ASCellNode {
     private let bubbleNode: ASDisplayNode
     private let avatarImageSize: CGFloat
     private let avatarImageNode: ASNetworkImageNode?
-
+    
     init(isOutgoing: Bool, topText: NSAttributedString?, contentTopText: NSAttributedString?, bottomText: NSAttributedString?, senderAvatarURL: URL?, senderAvatarImageSize: CGFloat = kAMMessageCellNodeAvatarImageSize, bubbleNode: ASDisplayNode) {
         self.isOutgoing = isOutgoing
-
+        
         topTextNode = topText != nil ? ASTextNode() : nil
         topTextNode?.isLayerBacked = true
         topTextNode?.attributedText = topText
         topTextNode?.style.alignSelf = .center
-
+        
         contentTopTextNode = contentTopText != nil ? ASTextNode() : nil
         contentTopTextNode?.isLayerBacked = true
         contentTopTextNode?.attributedText = contentTopText
@@ -53,7 +53,7 @@ class MessageCellNode: ASCellNode {
         bottomTextNode = bottomText != nil ? ASTextNode() : nil
         bottomTextNode?.isLayerBacked = true
         bottomTextNode?.attributedText = bottomText
-
+        
         super.init()
         
         if let node = topTextNode { addSubnode(node) }

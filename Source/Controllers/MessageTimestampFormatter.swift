@@ -11,27 +11,27 @@ import UIKit
 class MessageTimestampFormatter {
     
     private let dateFormatter: DateFormatter
-    private let dateTextAttributes: [NSAttributedStringKey: AnyObject]
-    private let timeTextAttributes: [NSAttributedStringKey: AnyObject]
+    private let dateTextAttributes: [String: AnyObject]
+    private let timeTextAttributes: [String: AnyObject]
     
     init() {
         dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         dateFormatter.doesRelativeDateFormatting = true
-
+        
         let color = UIColor.lightGray
-
+        
         dateTextAttributes = [
-            NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 12),
-            NSAttributedStringKey.foregroundColor: color
+            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12),
+            NSForegroundColorAttributeName: color
         ]
         
         timeTextAttributes = [
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12),
-            NSAttributedStringKey.foregroundColor: color
+            NSFontAttributeName: UIFont.systemFont(ofSize: 12),
+            NSForegroundColorAttributeName: color
         ]
     }
-
+    
     func attributedTimestamp(date: Date) -> NSAttributedString {
         let relativeDate = relativeDateString(date: date)
         let time = timeString(date: date)
@@ -46,7 +46,7 @@ class MessageTimestampFormatter {
         dateFormatter.timeStyle = .short
         return dateFormatter.string(from: date)
     }
-
+    
     private func relativeDateString(date: Date) -> String {
         dateFormatter.dateStyle = .medium
         dateFormatter.timeStyle = .none
