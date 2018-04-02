@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		38A1D758204C3AD700C88828 /* DefaultAsyncMessagesCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38A1D757204C3AD700C88828 /* DefaultAsyncMessagesCollectionViewDelegate.swift */; };
+		57E05DA12072770400CB8558 /* AsyncMessagesViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 57E05DA02072770400CB8558 /* AsyncMessagesViewController.bundle */; };
 		AC8B65D31A9373DA00131D84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8B65D21A9373DA00131D84 /* AppDelegate.swift */; };
 		AC8B65D51A9373DA00131D84 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8B65D41A9373DA00131D84 /* ViewController.swift */; };
 		AC8B65DA1A9373DA00131D84 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC8B65D91A9373DA00131D84 /* Images.xcassets */; };
@@ -35,6 +36,7 @@
 		1B8A292D9BC7865A434B294B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		356CBFABC1F3EA6E78E6884C /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		38A1D757204C3AD700C88828 /* DefaultAsyncMessagesCollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAsyncMessagesCollectionViewDelegate.swift; sourceTree = "<group>"; };
+		57E05DA02072770400CB8558 /* AsyncMessagesViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AsyncMessagesViewController.bundle; sourceTree = "<group>"; };
 		94DD265A8EFB33113BE48D46 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		AC8B65CD1A9373DA00131D84 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC8B65D11A9373DA00131D84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				ACC6EF4C1AA1A870002B76A9 /* AsyncMessagesViewController.xcassets */,
+				57E05DA02072770400CB8558 /* AsyncMessagesViewController.bundle */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 			files = (
 				ACC6EF5D1AA1A870002B76A9 /* AsyncMessagesViewController.xcassets in Resources */,
 				AC8B65DD1A9373DA00131D84 /* LaunchScreen.xib in Resources */,
+				57E05DA12072770400CB8558 /* AsyncMessagesViewController.bundle in Resources */,
 				AC8B65DA1A9373DA00131D84 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
