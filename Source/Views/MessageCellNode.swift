@@ -9,13 +9,13 @@
 import UIKit
 import AsyncDisplayKit
 
-let kAMMessageCellNodeAvatarImageSize: CGFloat = 34
+public let kAMMessageCellNodeAvatarImageSize: CGFloat = 34
 
-let kAMMessageCellNodeTopTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
+public let kAMMessageCellNodeTopTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
                                            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12)]
-let kAMMessageCellNodeContentTopTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
+public let kAMMessageCellNodeContentTopTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
                                                   NSFontAttributeName: UIFont.systemFont(ofSize: 12)]
-let kAMMessageCellNodeBottomTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
+public let kAMMessageCellNodeBottomTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
                                               NSFontAttributeName: UIFont.systemFont(ofSize: 11)]
 
 class MessageCellNode: ASCellNode {

@@ -22,7 +22,7 @@ func ==(lhs: MessageCellNodeMetadata, rhs: MessageCellNodeMetadata) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 
-class MessageCellNodeMetadataFactory {
+public class MessageCellNodeMetadataFactory {
     
     func buildMetadatas(for messages: [MessageData], currentUserID: String?) -> [MessageCellNodeMetadata] {
         var result = [MessageCellNodeMetadata]()

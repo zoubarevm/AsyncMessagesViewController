@@ -8,13 +8,13 @@
 
 import UIKit
 
-class MessageTimestampFormatter {
+public class MessageTimestampFormatter {
     
     private let dateFormatter: DateFormatter
     private let dateTextAttributes: [String: AnyObject]
     private let timeTextAttributes: [String: AnyObject]
     
-    init() {
+    public init() {
         dateFormatter = DateFormatter()
         dateFormatter.locale = NSLocale.current
         dateFormatter.doesRelativeDateFormatting = true

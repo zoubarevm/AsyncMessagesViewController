@@ -8,9 +8,9 @@
 
 import AsyncDisplayKit
 
-class MessageNetworkImageBubbleNodeFactory: MessageBubbleNodeFactory {
+public class MessageNetworkImageBubbleNodeFactory: MessageBubbleNodeFactory {
     
-    func build(message: MessageData, isOutgoing: Bool, bubbleImage: UIImage) -> ASDisplayNode {
+    public func build(message: MessageData, isOutgoing: Bool, bubbleImage: UIImage) -> ASDisplayNode {
         let url = URL(string: message.content())
         return MessageNetworkImageBubbleNode(url: url, bubbleImage: bubbleImage)
     }

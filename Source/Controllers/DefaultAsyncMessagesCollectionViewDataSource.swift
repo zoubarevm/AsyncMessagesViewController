@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesCollectionViewDataSource {
+public class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesCollectionViewDataSource {
     
     private let nodeMetadataFactory: MessageCellNodeMetadataFactory
     private let bubbleImageProvider: MessageBubbleImageProvider
@@ -20,7 +20,7 @@ class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesColle
     private var messages: [MessageData]
     private var nodeMetadatas: [MessageCellNodeMetadata]
     
-    init(currentUserID: String? = nil,
+    public init(currentUserID: String? = nil,
         nodeMetadataFactory: MessageCellNodeMetadataFactory = MessageCellNodeMetadataFactory(),
         bubbleImageProvider: MessageBubbleImageProvider = MessageBubbleImageProvider(),
         timestampFormatter: MessageTimestampFormatter = MessageTimestampFormatter(),
@@ -38,12 +38,12 @@ class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesColle
     }
 
     //MARK: ASCollectionDataSource methods
-    func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
+    public func collectionNode(_ collectionNode: ASCollectionNode, numberOfItemsInSection section: Int) -> Int {
         assert(nodeMetadatas.count == messages.count, "Node metadata is required for each message.")
         return messages.count
     }
 
-    func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
+    public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         let message = self.collectionNode(collectionNode: collectionNode, messageForItemAtIndexPath: indexPath)
         let metadata = nodeMetadatas[indexPath.item]
         let isOutgoing = metadata.isOutgoing
@@ -73,18 +73,18 @@ class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesColle
         return cellNodeBlock
     }
 
-    func collectionView(_ collectionView: ASCollectionView, constrainedSizeForNodeAt indexPath: IndexPath) -> ASSizeRange {
+    public func collectionView(_ collectionView: ASCollectionView, constrainedSizeForNodeAt indexPath: IndexPath) -> ASSizeRange {
         let width = collectionView.bounds.width;
         // Assume horizontal scroll directions
         return ASSizeRangeMake(CGSize(width: width, height: 0), CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
     }
 
     //MARK: AsyncMessagesCollectionViewDataSource methods
-    func currentUserID() -> String? {
+    public func currentUserID() -> String? {
         return _currentUserID
     }
     
-    func collectionNode(collectionNode: ASCollectionNode, updateCurrentUserID newUserID: String?) {
+    public func collectionNode(collectionNode: ASCollectionNode, updateCurrentUserID newUserID: String?) {
         if newUserID == _currentUserID {
             return
         }
@@ -99,11 +99,11 @@ class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesColle
         collectionNode.reloadItems(at: IndexPath.createIndexPaths(section: 0, items: reloadIndicies))
     }
 
-    func collectionNode(collectionNode: ASCollectionNode, messageForItemAtIndexPath indexPath: IndexPath) -> MessageData {
+    public func collectionNode(collectionNode: ASCollectionNode, messageForItemAtIndexPath indexPath: IndexPath) -> MessageData {
         return messages[indexPath.item]
     }
     
-    func collectionNode(collectionNode: ASCollectionNode, insertMessages newMessages: [MessageData], completion: ((Bool) -> ())?) {
+    public func collectionNode(collectionNode: ASCollectionNode, insertMessages newMessages: [MessageData], completion: ((Bool) -> ())?) {
         if newMessages.isEmpty {
             return
         }
@@ -137,7 +137,7 @@ class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesColle
             completion: completion)
     }
   
-    func collectionNode(collectionNode: ASCollectionNode, deleteMessagesAtIndexPaths indexPaths: [IndexPath], completion: ((Bool) -> ())?) {
+    public func collectionNode(collectionNode: ASCollectionNode, deleteMessagesAtIndexPaths indexPaths: [IndexPath], completion: ((Bool) -> ())?) {
         if indexPaths.isEmpty {
             return
         }
