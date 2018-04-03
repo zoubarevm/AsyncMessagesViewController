@@ -13,13 +13,22 @@ private let kAMMessageTextBubbleNodeIncomingTextAttributes = [NSForegroundColorA
                                                               NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
 private let kAMMessageTextBubbleNodeOutgoingTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
                                                               NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
+public typealias TextAttributes = [String : AnyObject];
 
 public class MessageTextBubbleNodeFactory: MessageBubbleNodeFactory {
     
+    private let incomingAttr: TextAttributes;
+    private let outgoingAttr: TextAttributes;
+    
+    public init(incomingTextAttributes: TextAttributes = kAMMessageTextBubbleNodeIncomingTextAttributes, outgoingTextAttributes: TextAttributes = kAMMessageTextBubbleNodeOutgoingTextAttributes){
+        incomingAttr = incomingTextAttributes;
+        outgoingAttr = outgoingTextAttributes;
+    }
+    
     public func build(message: MessageData, isOutgoing: Bool, bubbleImage: UIImage) -> ASDisplayNode {
         let attributes = isOutgoing
-            ? kAMMessageTextBubbleNodeOutgoingTextAttributes
-            : kAMMessageTextBubbleNodeIncomingTextAttributes
+            ? outgoingAttr
+            : incomingAttr
         let text = NSAttributedString(string: message.content(), attributes: attributes)
         return MessageTextBubbleNode(text: text, isOutgoing: isOutgoing, bubbleImage: bubbleImage)
     }
@@ -41,13 +50,13 @@ private class MessageTextNode: ASTextNode {
     
 }
 
-class MessageTextBubbleNode: ASDisplayNode {
+open class MessageTextBubbleNode: ASDisplayNode {
     
     private let isOutgoing: Bool
     private let bubbleImageNode: ASImageNode
     private let textNode: ASTextNode
     
-    init(text: NSAttributedString, isOutgoing: Bool, bubbleImage: UIImage) {
+    public init(text: NSAttributedString, isOutgoing: Bool, bubbleImage: UIImage) {
         self.isOutgoing = isOutgoing
         
         bubbleImageNode = ASImageNode()
@@ -62,7 +71,7 @@ class MessageTextBubbleNode: ASDisplayNode {
         addSubnode(textNode)
     }
     
-    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    override open func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let textNodeVerticalOffset = CGFloat(6)
         return ASBackgroundLayoutSpec(
             child: ASInsetLayoutSpec(

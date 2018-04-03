@@ -24,6 +24,11 @@ func ==(lhs: MessageCellNodeMetadata, rhs: MessageCellNodeMetadata) -> Bool {
 
 public class MessageCellNodeMetadataFactory {
     
+    
+    public init(){
+        
+    }
+    
     func buildMetadatas(for messages: [MessageData], currentUserID: String?) -> [MessageCellNodeMetadata] {
         var result = [MessageCellNodeMetadata]()
         if messages.isEmpty {

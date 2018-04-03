@@ -9,7 +9,7 @@
 import Foundation
 import AsyncDisplayKit
 
-public class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesCollectionViewDataSource {
+open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessagesCollectionViewDataSource {
     
     private let nodeMetadataFactory: MessageCellNodeMetadataFactory
     private let bubbleImageProvider: MessageBubbleImageProvider
