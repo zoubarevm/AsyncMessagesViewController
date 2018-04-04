@@ -26,9 +26,10 @@ class MessageCellNode: ASCellNode {
     private let bottomTextNode: ASTextNode?
     private let bubbleNode: ASDisplayNode
     private let avatarImageSize: CGFloat
+    //private let avatarImageNode: ASNetworkImageNode?
     private let avatarImageNode: ASNetworkImageNode?
     
-    init(isOutgoing: Bool, topText: NSAttributedString?, contentTopText: NSAttributedString?, bottomText: NSAttributedString?, senderAvatarURL: URL?, senderAvatarImageSize: CGFloat = kAMMessageCellNodeAvatarImageSize, bubbleNode: ASDisplayNode) {
+    init(isOutgoing: Bool, topText: NSAttributedString?, contentTopText: NSAttributedString?, bottomText: NSAttributedString?, senderAvatarURL: URL?, showsSenderAvatar: Bool, localImageName: String, senderAvatarImageSize: CGFloat = kAMMessageCellNodeAvatarImageSize, bubbleNode: ASDisplayNode) {
         self.isOutgoing = isOutgoing
         
         topTextNode = topText != nil ? ASTextNode() : nil
@@ -41,11 +42,21 @@ class MessageCellNode: ASCellNode {
         contentTopTextNode?.attributedText = contentTopText
         
         avatarImageSize = senderAvatarImageSize
+        
+        
         avatarImageNode = avatarImageSize > 0 ? ASNetworkImageNode() : nil
         avatarImageNode?.style.preferredSize = CGSize(width: avatarImageSize, height: avatarImageSize)
         avatarImageNode?.backgroundColor = UIColor.clear
         avatarImageNode?.imageModificationBlock = ASImageNodeRoundBorderModificationBlock(0, nil)
-        avatarImageNode?.url = senderAvatarURL
+        
+        if(showsSenderAvatar){
+            if(senderAvatarURL != nil){
+                avatarImageNode?.url = senderAvatarURL
+            }
+            else{
+                avatarImageNode?.image =  UIImage(named: localImageName);
+            }
+        }
         
         self.bubbleNode = bubbleNode
         self.bubbleNode.style.flexShrink = 1

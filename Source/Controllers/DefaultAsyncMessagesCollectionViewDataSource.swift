@@ -67,6 +67,8 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
                 contentTopText: senderDisplayName,
                 bottomText: nil,
                 senderAvatarURL: senderAvatarURL,
+                showsSenderAvatar: metadata.showsSenderAvatar,
+                localImageName: message.localImageName(),
                 bubbleNode: bubbleNode)
             return cellNode
         }

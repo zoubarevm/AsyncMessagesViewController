@@ -24,6 +24,8 @@ public let kAMMessageDataContentTypeNetworkImage: MessageDataContentType = 1
     
     func senderDisplayName() -> String
     
-    func senderAvatarURL() -> URL
+    func senderAvatarURL() -> URL?
+    
+    func localImageName() -> String
     
 }
