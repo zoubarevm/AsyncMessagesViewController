@@ -11,9 +11,10 @@ import UIKit
 private struct MessageProperties: Hashable {
     let isOutgoing: Bool
     let hasTail: Bool
+    let isVideoMessage: Bool
     
     var hashValue: Int {
-        return (31 &* isOutgoing.hashValue) &+ hasTail.hashValue
+        return (31 &* isOutgoing.hashValue) &+ (58 &* hasTail.hashValue) &+ isVideoMessage.hashValue
     }
 }
 
@@ -23,6 +24,7 @@ private func ==(lhs: MessageProperties, rhs: MessageProperties) -> Bool {
 
 private let kDefaultIncomingColor = UIColor(red: 239 / 255, green: 237 / 255, blue: 237 / 255, alpha: 1)
 private let kDefaultOutgoingColor = UIColor(red: 17 / 255, green: 107 / 255, blue: 254 / 255, alpha: 1)
+private let kDefaultVideoColor =  UIColor.black;
 
 private let kBundleName = "AsyncMessagesViewController.bundle"
 private let kTableName = "AsyncMessagesViewController"
@@ -31,6 +33,7 @@ public class MessageBubbleImageProvider {
     
     private let outgoingColor: UIColor
     private let incomingColor: UIColor
+    private let videoImageBackgroundColor: UIColor
     private var imageCache = [MessageProperties: UIImage]()
     
     static func getBubbleImage(_ imageName: String) -> UIImage{
@@ -60,13 +63,14 @@ public class MessageBubbleImageProvider {
         
     }
     
-    public init(incomingColor: UIColor = kDefaultIncomingColor, outgoingColor: UIColor = kDefaultOutgoingColor) {
+    public init(incomingColor: UIColor = kDefaultIncomingColor, outgoingColor: UIColor = kDefaultOutgoingColor, videoColor: UIColor = kDefaultVideoColor) {
         self.incomingColor = incomingColor
         self.outgoingColor = outgoingColor
+        self.videoImageBackgroundColor = videoColor
     }
     
-    func bubbleImage(isOutgoing: Bool, hasTail: Bool) -> UIImage {
-        let properties = MessageProperties(isOutgoing: isOutgoing, hasTail: hasTail)
+    func bubbleImage(isOutgoing: Bool, hasTail: Bool, isVideoMessage: Bool = false) -> UIImage {
+        let properties = MessageProperties(isOutgoing: isOutgoing, hasTail: hasTail, isVideoMessage: isVideoMessage)
         return bubbleImage(properties: properties)
     }
     
@@ -89,7 +93,16 @@ public class MessageBubbleImageProvider {
           let bubble =  MessageBubbleImageProvider.getBubbleImage(imageName);
         
         do {
-            var normalBubble = try bubble.imageMaskedWith(color: properties.isOutgoing ? outgoingColor : incomingColor)
+            var color: UIColor!
+            
+            if(properties.isVideoMessage){
+                color = videoImageBackgroundColor
+            }
+            else{
+                color = properties.isOutgoing ? outgoingColor : incomingColor
+            }
+            var normalBubble = try bubble.imageMaskedWith(color: color)
+            
             
             // make image stretchable from center point
             let center = CGPoint(x: bubble.size.width / 2.0, y: bubble.size.height / 2.0)

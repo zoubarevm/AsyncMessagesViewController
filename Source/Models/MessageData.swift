@@ -11,6 +11,7 @@ import Foundation
 public typealias MessageDataContentType = Int
 public let kAMMessageDataContentTypeText: MessageDataContentType = 0
 public let kAMMessageDataContentTypeNetworkImage: MessageDataContentType = 1
+public let kAMMessageDataContentTypeVideo: MessageDataContentType = 2
 
 @objc public protocol MessageData {
     
@@ -27,5 +28,7 @@ public let kAMMessageDataContentTypeNetworkImage: MessageDataContentType = 1
     func senderAvatarURL() -> URL?
     
     func localImageName() -> String
+    
+    func getPlayButton() -> String
     
 }

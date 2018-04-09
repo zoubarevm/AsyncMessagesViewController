@@ -12,9 +12,10 @@ struct MessageCellNodeMetadata: Hashable {
     let showsSenderAvatar: Bool
     let showsTailForBubbleImage: Bool
     let showsDate: Bool
+    let isVideoMessage: Bool
     
     var hashValue: Int {
-        return (24 &* isOutgoing.hashValue) &+ (18 &* showsSenderName.hashValue) &+ (12 &* showsSenderAvatar.hashValue) &+ (6 &* showsTailForBubbleImage.hashValue) &+ showsDate.hashValue
+        return (32 &* isVideoMessage.hashValue) &+ (24 &* isOutgoing.hashValue) &+ (18 &* showsSenderName.hashValue) &+ (12 &* showsSenderAvatar.hashValue) &+ (6 &* showsTailForBubbleImage.hashValue) &+ showsDate.hashValue
     }
 }
 
@@ -47,7 +48,8 @@ public class MessageCellNodeMetadataFactory {
                 showsSenderName: showSenderNameFlags[i],
                 showsSenderAvatar: showSenderAvatarFlags[i],
                 showsTailForBubbleImage: showTailFlags[i],
-                showsDate: showDateFlags[i]
+                showsDate: showDateFlags[i],
+                isVideoMessage: messages[i].contentType() == kAMMessageDataContentTypeVideo
             )
             result.append(metadata)
         }

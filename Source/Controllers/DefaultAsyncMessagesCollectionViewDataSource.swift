@@ -26,7 +26,8 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
         timestampFormatter: MessageTimestampFormatter = MessageTimestampFormatter(),
         bubbleNodeFactories: [MessageDataContentType: MessageBubbleNodeFactory] = [
             kAMMessageDataContentTypeText: MessageTextBubbleNodeFactory(),
-            kAMMessageDataContentTypeNetworkImage: MessageNetworkImageBubbleNodeFactory()
+            kAMMessageDataContentTypeNetworkImage: MessageNetworkImageBubbleNodeFactory(),
+            kAMMessageDataContentTypeVideo: MessageVideoBubbleNodeFactory(),
         ]) {
             _currentUserID = currentUserID
             self.nodeMetadataFactory = nodeMetadataFactory
@@ -56,7 +57,7 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
             ? NSAttributedString(string: message.senderDisplayName(), attributes: kAMMessageCellNodeContentTopTextAttributes)
             : nil
         
-        let bubbleImage = bubbleImageProvider.bubbleImage(isOutgoing: isOutgoing, hasTail: metadata.showsTailForBubbleImage)
+        let bubbleImage = bubbleImageProvider.bubbleImage(isOutgoing: isOutgoing, hasTail: metadata.showsTailForBubbleImage, isVideoMessage: metadata.isVideoMessage)
         assert(bubbleNodeFactories.index(forKey: message.contentType()) != nil, "No bubble node factory for content type: \(message.contentType())")
         let bubbleNode = bubbleNodeFactories[message.contentType()]!.build(message: message, isOutgoing: isOutgoing, bubbleImage: bubbleImage)
 
