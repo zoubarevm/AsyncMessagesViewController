@@ -15,7 +15,7 @@ private struct MessageProperties: Hashable {
     let isMediaPending: Bool
     
     var hashValue: Int {
-        return (31 &* isOutgoing.hashValue) &+ (43 &* hasTail.hashValue) &+ (58 &* hasTail.hashValue) &+ isVideoMessage.hashValue
+        return (31 &* isOutgoing.hashValue) &+ (43 &* isMediaPending.hashValue) &+ (58 &* hasTail.hashValue) &+ isVideoMessage.hashValue
     }
 }
 

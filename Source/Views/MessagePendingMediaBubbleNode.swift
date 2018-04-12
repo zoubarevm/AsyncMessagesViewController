@@ -38,16 +38,18 @@ private class MessageNode: ASDisplayNode {
             
             let loader = UIActivityIndicatorView();
             loader.color = UIColor.black;
-            loader.startAnimating()
+            
             loader.translatesAutoresizingMaskIntoConstraints = false
             
-            let horizontalConstraint = NSLayoutConstraint(item: loader, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: activityView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
-            activityView.addConstraint(horizontalConstraint)
-            
-            let verticalConstraint = NSLayoutConstraint(item: loader, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: activityView, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
-            activityView.addConstraint(verticalConstraint)
+
             
             activityView.addSubview(loader)
+            let horizontalConstraint = NSLayoutConstraint(item: loader, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: activityView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+            activityView.addConstraint(horizontalConstraint)
+
+            let verticalConstraint = NSLayoutConstraint(item: loader, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: activityView, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
+            activityView.addConstraint(verticalConstraint)
+            loader.startAnimating()
             
             return activityView
         };
