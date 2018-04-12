@@ -15,6 +15,8 @@ public let kAMMessageDataContentTypeVideo: MessageDataContentType = 2
 
 @objc public protocol MessageData {
     
+    func messageKey() -> String
+    
     func contentType() -> MessageDataContentType
     
     func content() -> String
@@ -30,5 +32,7 @@ public let kAMMessageDataContentTypeVideo: MessageDataContentType = 2
     func localImageName() -> String
     
     func getPlayButton() -> String
+    
+    func isMediaPending() -> Bool
     
 }

@@ -12,9 +12,10 @@ private struct MessageProperties: Hashable {
     let isOutgoing: Bool
     let hasTail: Bool
     let isVideoMessage: Bool
+    let isMediaPending: Bool
     
     var hashValue: Int {
-        return (31 &* isOutgoing.hashValue) &+ (58 &* hasTail.hashValue) &+ isVideoMessage.hashValue
+        return (31 &* isOutgoing.hashValue) &+ (43 &* hasTail.hashValue) &+ (58 &* hasTail.hashValue) &+ isVideoMessage.hashValue
     }
 }
 
@@ -34,6 +35,8 @@ public class MessageBubbleImageProvider {
     private let outgoingColor: UIColor
     private let incomingColor: UIColor
     private let videoImageBackgroundColor: UIColor
+    
+    
     private var imageCache = [MessageProperties: UIImage]()
     
     static func getBubbleImage(_ imageName: String) -> UIImage{
@@ -69,8 +72,8 @@ public class MessageBubbleImageProvider {
         self.videoImageBackgroundColor = videoColor
     }
     
-    func bubbleImage(isOutgoing: Bool, hasTail: Bool, isVideoMessage: Bool = false) -> UIImage {
-        let properties = MessageProperties(isOutgoing: isOutgoing, hasTail: hasTail, isVideoMessage: isVideoMessage)
+    func bubbleImage(isOutgoing: Bool, hasTail: Bool, isVideoMessage: Bool = false, isMediaPending: Bool = false) -> UIImage {
+        let properties = MessageProperties(isOutgoing: isOutgoing, hasTail: hasTail, isVideoMessage: isVideoMessage, isMediaPending: isMediaPending)
         return bubbleImage(properties: properties)
     }
     
@@ -86,16 +89,17 @@ public class MessageBubbleImageProvider {
     
     private func buildBubbleImage(properties: MessageProperties) -> UIImage {
         let imageName = "bubble" + (properties.isOutgoing ? "_outgoing" : "_incoming") + (properties.hasTail ? "" : "_tailless")
-        //let bubble = UIImage(named: imageName)!
-//        guard let bubble = Bundle.asyncImage(withName: imageName, andExtension: "png") else {
-//            return UIImage()
-//        }`
+
+        
           let bubble =  MessageBubbleImageProvider.getBubbleImage(imageName);
         
         do {
             var color: UIColor!
             
-            if(properties.isVideoMessage){
+            if(properties.isMediaPending){
+                color = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
+            }
+            else if(properties.isVideoMessage){
                 color = videoImageBackgroundColor
             }
             else{

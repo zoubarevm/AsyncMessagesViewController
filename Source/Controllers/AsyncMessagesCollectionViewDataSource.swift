@@ -22,4 +22,6 @@ public protocol AsyncMessagesCollectionViewDataSource: ASCollectionDataSource {
     
     func collectionNode(collectionNode: ASCollectionNode, deleteMessagesAtIndexPaths indexPaths: [IndexPath], completion: ((Bool) -> ())?)
     
+    func collectionNode(collectionNode: ASCollectionNode, updateMessagesAtIndexPaths replacementMessages:[MessageData], indices: [Int], completion: ((Bool) -> ())?)
+    
 }

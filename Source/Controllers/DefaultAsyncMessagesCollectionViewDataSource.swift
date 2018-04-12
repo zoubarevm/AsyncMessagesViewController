@@ -57,9 +57,11 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
             ? NSAttributedString(string: message.senderDisplayName(), attributes: kAMMessageCellNodeContentTopTextAttributes)
             : nil
         
-        let bubbleImage = bubbleImageProvider.bubbleImage(isOutgoing: isOutgoing, hasTail: metadata.showsTailForBubbleImage, isVideoMessage: metadata.isVideoMessage)
+        let bubbleImage = bubbleImageProvider.bubbleImage(isOutgoing: isOutgoing, hasTail: metadata.showsTailForBubbleImage, isVideoMessage: metadata.isVideoMessage, isMediaPending: metadata.isPendingMessage)
         assert(bubbleNodeFactories.index(forKey: message.contentType()) != nil, "No bubble node factory for content type: \(message.contentType())")
-        let bubbleNode = bubbleNodeFactories[message.contentType()]!.build(message: message, isOutgoing: isOutgoing, bubbleImage: bubbleImage)
+        
+        let factory = metadata.isPendingMessage ? MessagePendingMediaBubbleNodeFactory() : bubbleNodeFactories[message.contentType()]!
+        let bubbleNode = factory.build(message: message, isOutgoing: isOutgoing, bubbleImage: bubbleImage)
 
         let cellNodeBlock:() -> ASCellNode = {
             let cellNode = MessageCellNode(
@@ -169,6 +171,28 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
                 }
         },
             completion: completion)
+    }
+    
+    public func collectionNode(collectionNode: ASCollectionNode, updateMessagesAtIndexPaths replacementMessages:[MessageData], indices: [Int], completion: ((Bool) -> ())?) {
+        // update
+        if indices.isEmpty || replacementMessages.isEmpty {
+            return
+        }
+        
+        for i in 0..<indices.count{
+            
+            messages[ indices[i] ] = replacementMessages[i]
+        }
+
+        let updatedNodeMetadatas = nodeMetadataFactory.buildMetadatas(for: messages, currentUserID: _currentUserID)
+        nodeMetadatas = updatedNodeMetadatas
+        
+        collectionNode.performBatchUpdates(
+            {
+                collectionNode.reloadItems(at: IndexPath.createIndexPaths(section: 0, items: indices))
+            },
+            completion: completion)
+
     }
     
 }
