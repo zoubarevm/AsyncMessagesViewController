@@ -34,6 +34,7 @@ open class AsyncMessagesViewController: SLKTextViewController {
         asyncCollectionView.backgroundColor = UIColor.white
         asyncCollectionView.scrollsToTop = true
         
+        
         asyncCollectionNode.dataSource = dataSource
         asyncCollectionNode.delegate = delegate
         
@@ -86,11 +87,11 @@ open class AsyncMessagesViewController: SLKTextViewController {
         super.viewWillLayoutSubviews()
     }
     
-    public func scrollCollectionViewToBottom() {
+    public func scrollCollectionViewToBottom(_ animated: Bool = true) {
         let numberOfItems = dataSource.collectionNode!(asyncCollectionNode, numberOfItemsInSection: 0)
         if numberOfItems > 0 {
             let lastItemIndexPath = IndexPath(item: numberOfItems - 1, section: 0)
-            asyncCollectionNode.scrollToItem(at: lastItemIndexPath, at: .bottom, animated: true)
+            asyncCollectionNode.scrollToItem(at: lastItemIndexPath, at: .bottom, animated: animated)
         }
     }
     

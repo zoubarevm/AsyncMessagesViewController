@@ -75,6 +75,7 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
                 bubbleNode: bubbleNode)
             return cellNode
         }
+
         return cellNodeBlock
     }
 
