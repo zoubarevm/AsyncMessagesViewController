@@ -21,13 +21,17 @@ public class MessageNetworkImageBubbleNodeFactory: MessageBubbleNodeFactory {
 open class MessageNetworkImageBubbleNode: ASNetworkImageNode {
     private let minSize: CGSize
     private let bubbleImage: UIImage
+    private var imageURL: URL?
     
     public init(url: URL?, bubbleImage: UIImage, minSize: CGSize = CGSize(width: 210, height: 150)) {
         self.minSize = minSize
         self.bubbleImage = bubbleImage
         super.init(cache: nil, downloader: ASBasicImageDownloader.shared())
-
-        self.url = url
+        
+        //using self.url downloads and sets the image background for the ASNetworkImageNode
+        //self.url = url
+        
+        self.imageURL = url
     }
     
     override open func calculateSizeThatFits(_ constrainedSize: CGSize) -> CGSize {
@@ -39,6 +43,18 @@ open class MessageNetworkImageBubbleNode: ASNetworkImageNode {
         let mask = UIImageView(image: bubbleImage)
         mask.frame.size = calculatedSize
         view.layer.mask = mask.layer
+        view.backgroundColor = UIColor.gray
+        
+        if(self.imageURL != nil){
+            weak var weakSelf = self;
+            MediaUtils.getCachedImage(urlString: self.imageURL!.absoluteString, { (image) in
+                DispatchQueue.main.async {
+                    weakSelf?.image = image;
+                }
+            })
+        }
+        
+        
     }
     
 }

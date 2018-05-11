@@ -24,7 +24,7 @@ public class MessageVideoBubbleNodeFactory: MessageBubbleNodeFactory {
     public func build(message: MessageData, isOutgoing: Bool, bubbleImage: UIImage) -> ASDisplayNode {
         //let text = NSAttributedString(string: message.content(), attributes: videoTextAttr)
         
-        return MessageVideoImageBubbleNode(playButtonName: message.getPlayButton(), isOutgoing: isOutgoing, bubbleImage: bubbleImage)
+        return MessageVideoImageBubbleNode(videoURL: URL(string: message.content()), playButtonName: message.getPlayButton(), isOutgoing: isOutgoing, bubbleImage: bubbleImage)
     }
     
 }
@@ -62,44 +62,85 @@ private class MessageNode: ASDisplayNode {
 open class MessageVideoImageBubbleNode: ASDisplayNode {
     
     private let isOutgoing: Bool
-    private let bubbleImageNode: ASImageNode
+//    private let bubbleImageNode: ASImageNode
+    private let bubbleImage: UIImage
     private let buttonNode: ASDisplayNode
+    private let thumbnailNode: ASImageNode
     private let size: CGSize
+    private let videoURL: URL?
     
-    public init(playButtonName: String, isOutgoing: Bool, bubbleImage: UIImage, size: CGSize = CGSize(width: 150, height: 150)) {
+    public init(videoURL: URL?, playButtonName: String, isOutgoing: Bool, bubbleImage: UIImage, size: CGSize = CGSize(width: 150, height: 150)) {
         self.isOutgoing = isOutgoing
         self.size = size
+        self.bubbleImage = bubbleImage
+        self.videoURL = videoURL;
         
-        bubbleImageNode = ASImageNode()
+
+        
+        //bubbleImageNode = ASImageNode()
         //bubbleImageNode.forcedSize = size;
-        bubbleImageNode.image = bubbleImage
+        //bubbleImageNode.image = bubbleImage
         
         buttonNode = MessageNode(playButton: UIImage(named: playButtonName))
         
 //        buttonNode.playImage.image = UIImage(named: playButtonName)
         //textNode.attributedText = text
         
+        thumbnailNode = ASImageNode()
+        thumbnailNode.backgroundColor = UIColor.gray;
+        
+
+
+        
         super.init()
         
-        addSubnode(bubbleImageNode)
+        //addSubnode(bubbleImageNode)
+        addSubnode(thumbnailNode)
         addSubnode(buttonNode)
     }
     
+    override open func didLoad() {
+        super.didLoad()
+        let mask = UIImageView(image: bubbleImage)
+        mask.frame.size = calculatedSize
+        view.layer.mask = mask.layer
+        view.backgroundColor = UIColor.gray
+        
+        if(self.videoURL != nil){
+            weak var tN = thumbnailNode;
+            MediaUtils.getThumbnailFromVideo(urlString: self.videoURL!.absoluteString, { (image) in
+                DispatchQueue.main.async {
+                    tN?.image = image;
+                }
+            })
+        }
+    }
 
     
 
     override open func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let textNodeVerticalOffset = CGFloat(6)
-
+        let buttonNodeLayout = ASInsetLayoutSpec(
+            insets: UIEdgeInsetsMake(
+                12,
+                12 + (isOutgoing ? 0 : textNodeVerticalOffset),
+                12,
+                12 + (isOutgoing ? textNodeVerticalOffset : 0)),
+            child: buttonNode)
+        
         return ASBackgroundLayoutSpec(
-            child: ASInsetLayoutSpec(
-                insets: UIEdgeInsetsMake(
-                    12,
-                    12 + (isOutgoing ? 0 : textNodeVerticalOffset),
-                    12,
-                    12 + (isOutgoing ? textNodeVerticalOffset : 0)),
-                child: buttonNode),
-            background: bubbleImageNode)
+            child: buttonNodeLayout,
+            background: thumbnailNode)
+
+//        return ASBackgroundLayoutSpec(
+//            child: ASInsetLayoutSpec(
+//                insets: UIEdgeInsetsMake(
+//                    12,
+//                    12 + (isOutgoing ? 0 : textNodeVerticalOffset),
+//                    12,
+//                    12 + (isOutgoing ? textNodeVerticalOffset : 0)),
+//                child: buttonNode),
+//            background: bubbleImageNode)
 //        return ASBackgroundLayoutSpec(child: textNode, background: bubbleImageNode)
     }
     

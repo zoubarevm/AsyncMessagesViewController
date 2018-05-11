@@ -16,6 +16,7 @@ open class AsyncMessagesViewController: SLKTextViewController {
     //public let delegate: ASCollectionDelegate
     open let asyncCollectionNode: ASCollectionNode
     //public let asyncCollectionView: asyncCol
+    public let cacheImages = true;
     
     override open var collectionView: ASCollectionView {
         return scrollView as! ASCollectionView
