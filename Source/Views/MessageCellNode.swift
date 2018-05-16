@@ -16,7 +16,7 @@ public let kAMMessageCellNodeTopTextAttributes = [NSForegroundColorAttributeName
 public let kAMMessageCellNodeContentTopTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
                                                   NSFontAttributeName: UIFont.systemFont(ofSize: 12)]
 public let kAMMessageCellNodeBottomTextAttributes = [NSForegroundColorAttributeName: UIColor.lightGray,
-                                              NSFontAttributeName: UIFont.systemFont(ofSize: 11)]
+                                              NSFontAttributeName: UIFont.systemFont(ofSize: 12)]
 
 class MessageCellNode: ASCellNode {
     
@@ -35,7 +35,10 @@ class MessageCellNode: ASCellNode {
         topTextNode = topText != nil ? ASTextNode() : nil
         topTextNode?.isLayerBacked = true
         topTextNode?.attributedText = topText
+        topTextNode?.textContainerInset = UIEdgeInsetsMake(10, 0, 10, 0)
         topTextNode?.style.alignSelf = .center
+        
+        
         
         contentTopTextNode = contentTopText != nil ? ASTextNode() : nil
         contentTopTextNode?.isLayerBacked = true
@@ -73,7 +76,9 @@ class MessageCellNode: ASCellNode {
         addSubnode(bubbleNode)
         if let node = bottomTextNode { addSubnode(node) }
         
+        //backgroundColor = .red
         selectionStyle = .none
+        //separatorInset = UIEdgeInsets(top: 0,left: 0,bottom: 0,right: 0);
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
@@ -88,7 +93,9 @@ class MessageCellNode: ASCellNode {
                 justifyContent: .start, // Never used
                 alignItems: .end,
                 children: Array.filterNils(from: isOutgoing ? [bubbleNode, avatarImageNode] : [avatarImageNode, bubbleNode])),
-            bottomTextNode]
+            (bottomTextNode != nil)
+                ? ASInsetLayoutSpec(insets: UIEdgeInsetsMake(5, 0, 0, 0), child: bottomTextNode!)
+                : nil]
         return ASInsetLayoutSpec(
             insets: UIEdgeInsetsMake(1, 4, 1, 4),
             child: ASStackLayoutSpec(

@@ -41,6 +41,13 @@ public class MessageTimestampFormatter {
         return timestamp
     }
     
+    func timeStamp(date: Date) -> String {
+        let relativeDate = relativeDateString(date: date)
+        let time = timeString(date: date)
+        
+        return "\(relativeDate) \(time)"
+    }
+    
     private func timeString(date: Date) -> String {
         dateFormatter.dateStyle = .none
         dateFormatter.timeStyle = .short

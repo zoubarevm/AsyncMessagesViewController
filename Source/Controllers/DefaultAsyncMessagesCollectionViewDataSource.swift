@@ -43,6 +43,11 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
         assert(nodeMetadatas.count == messages.count, "Node metadata is required for each message.")
         return messages.count
     }
+    
+    open func collectionNode(_ collectionNode: ASCollectionNode, nodeForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> ASCellNode {
+        return ASCellNode()
+    }
+    
 
     public func collectionNode(_ collectionNode: ASCollectionNode, nodeBlockForItemAt indexPath: IndexPath) -> ASCellNodeBlock {
         let message = self.collectionNode(collectionNode: collectionNode, messageForItemAtIndexPath: indexPath)
@@ -53,22 +58,39 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
         let messageDate: NSAttributedString? = metadata.showsDate
             ? timestampFormatter.attributedTimestamp(date: message.date())
             : nil
-        let senderDisplayName: NSAttributedString? = metadata.showsSenderName
-            ? NSAttributedString(string: message.senderDisplayName(), attributes: kAMMessageCellNodeContentTopTextAttributes)
-            : nil
+        //let senderDisplayName: NSAttributedString? = metadata.showsSenderName
+        //    ? NSAttributedString(string: message.senderDisplayName(), attributes: kAMMessageCellNodeContentTopTextAttributes)
+        //    : nil
+        
+        let senderDisplayName: NSAttributedString? = nil;
         
         let bubbleImage = bubbleImageProvider.bubbleImage(isOutgoing: isOutgoing, hasTail: metadata.showsTailForBubbleImage, isVideoMessage: metadata.isVideoMessage, isMediaPending: metadata.isPendingMessage)
         assert(bubbleNodeFactories.index(forKey: message.contentType()) != nil, "No bubble node factory for content type: \(message.contentType())")
         
         let factory = metadata.isPendingMessage ? MessagePendingMediaBubbleNodeFactory() : bubbleNodeFactories[message.contentType()]!
         let bubbleNode = factory.build(message: message, isOutgoing: isOutgoing, bubbleImage: bubbleImage)
+        
+        var sentText: NSAttributedString? = nil;
+        if(metadata.showLastStatus){
+            var text = "Sent at";
+            if(_currentUserID == message.senderID()){
+                if let viewDate = message.viewDate() {
+                    text = "Seen at"
+                    
+                }
+            }
+            
+            sentText = NSAttributedString(string: "\(text) \(timestampFormatter.timeStamp(date: message.date()))", attributes: kAMMessageCellNodeBottomTextAttributes)
+            
+        }
+
 
         let cellNodeBlock:() -> ASCellNode = {
             let cellNode = MessageCellNode(
                 isOutgoing: isOutgoing,
                 topText: messageDate,
                 contentTopText: senderDisplayName,
-                bottomText: nil,
+                bottomText: sentText,
                 senderAvatarURL: senderAvatarURL,
                 showsSenderAvatar: metadata.showsSenderAvatar,
                 localImageName: message.localImageName(),

@@ -23,6 +23,8 @@ public let kAMMessageDataContentTypeVideo: MessageDataContentType = 2
     
     func date() -> Date
     
+    func viewDate() -> Date?
+    
     func senderID() -> String
     
     func senderDisplayName() -> String

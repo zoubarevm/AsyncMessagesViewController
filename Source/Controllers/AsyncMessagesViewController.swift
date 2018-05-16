@@ -18,6 +18,8 @@ open class AsyncMessagesViewController: SLKTextViewController {
     //public let asyncCollectionView: asyncCol
     public let cacheImages = true;
     
+    public let layout: UICollectionViewFlowLayout
+    
     override open var collectionView: ASCollectionView {
         return scrollView as! ASCollectionView
     }
@@ -26,15 +28,18 @@ open class AsyncMessagesViewController: SLKTextViewController {
         self.dataSource = dataSource
         //self.delegate = delegate
         
-        let layout = UICollectionViewFlowLayout()
+        layout = UICollectionViewFlowLayout()
+        
         layout.scrollDirection = UICollectionViewScrollDirection.vertical
+        layout.minimumLineSpacing = 1
+        
         
         asyncCollectionNode = ASCollectionNode(collectionViewLayout: layout)
         let asyncCollectionView = asyncCollectionNode.view
         
         asyncCollectionView.backgroundColor = UIColor.white
         asyncCollectionView.scrollsToTop = true
-        
+        asyncCollectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
         
         asyncCollectionNode.dataSource = dataSource
         asyncCollectionNode.delegate = delegate
@@ -45,9 +50,15 @@ open class AsyncMessagesViewController: SLKTextViewController {
         isInverted = false
     }
     
+    open override func loadView() {
+        layout.headerReferenceSize = CGSize(width: asyncCollectionNode.bounds.width, height: 100);
+        super.loadView()
+    }
+    
     open override func viewDidLoad() {
         //collectionView.backgroundColor = UIColor.red;
         super.viewDidLoad();
+        
         let longPressGesture  = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         longPressGesture.delaysTouchesBegan = true;
         
