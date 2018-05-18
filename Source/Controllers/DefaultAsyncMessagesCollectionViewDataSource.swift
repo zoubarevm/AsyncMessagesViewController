@@ -72,15 +72,16 @@ open class DefaultAsyncMessagesCollectionViewDataSource: NSObject, AsyncMessages
         
         var sentText: NSAttributedString? = nil;
         if(metadata.showLastStatus){
-            var text = "Sent at";
+            var text = "Sent";
+            var date = message.date()
             if(_currentUserID == message.senderID()){
                 if let viewDate = message.viewDate() {
-                    text = "Seen at"
-                    
+                    text = "Seen"
+                    date = viewDate
                 }
             }
             
-            sentText = NSAttributedString(string: "\(text) \(timestampFormatter.timeStamp(date: message.date()))", attributes: kAMMessageCellNodeBottomTextAttributes)
+            sentText = NSAttributedString(string: "\(text) \(timestampFormatter.timeStamp(date: date))", attributes: kAMMessageCellNodeBottomTextAttributes)
             
         }
 
