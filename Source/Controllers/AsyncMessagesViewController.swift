@@ -65,7 +65,7 @@ open class AsyncMessagesViewController: SLKTextViewController {
         self.collectionView.addGestureRecognizer(longPressGesture)
     }
     
-    func handleLongPress(gesture : UILongPressGestureRecognizer!){
+    @objc func handleLongPress(gesture : UILongPressGestureRecognizer!){
         if gesture.state != .began {
             return
         }

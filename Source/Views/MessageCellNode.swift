@@ -11,12 +11,10 @@ import AsyncDisplayKit
 
 public let kAMMessageCellNodeAvatarImageSize: CGFloat = 34
 
-public let kAMMessageCellNodeTopTextAttributes = [NSForegroundColorAttributeName: UIColor.darkGray,
-                                           NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12)]
-public let kAMMessageCellNodeContentTopTextAttributes = [NSForegroundColorAttributeName: UIColor.darkGray,
-                                                  NSFontAttributeName: UIFont.systemFont(ofSize: 12)]
-public let kAMMessageCellNodeBottomTextAttributes = [NSForegroundColorAttributeName: UIColor.darkGray,
-                                              NSFontAttributeName: UIFont.systemFont(ofSize: 12)]
+public let kAMMessageCellNodeTopTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+                                                  NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12)]
+public let kAMMessageCellNodeContentTopTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
+public let kAMMessageCellNodeBottomTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)]
 
 class MessageCellNode: ASCellNode {
     
@@ -35,7 +33,7 @@ class MessageCellNode: ASCellNode {
         topTextNode = topText != nil ? ASTextNode() : nil
         topTextNode?.isLayerBacked = true
         topTextNode?.attributedText = topText
-        topTextNode?.textContainerInset = UIEdgeInsetsMake(10, 0, 10, 0)
+        topTextNode?.textContainerInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         topTextNode?.style.alignSelf = .center
         
         
@@ -85,7 +83,7 @@ class MessageCellNode: ASCellNode {
         let unfilteredChildren: [ASLayoutElement?] = [
             topTextNode,
             (contentTopTextNode != nil)
-                ? ASInsetLayoutSpec(insets: UIEdgeInsetsMake(0, 22 + avatarImageSize, 0, 0), child: contentTopTextNode!)
+                ? ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: 22 + avatarImageSize, bottom: 0, right: 0), child: contentTopTextNode!)
                 : nil,
             ASStackLayoutSpec(
                 direction: .horizontal,
@@ -94,10 +92,10 @@ class MessageCellNode: ASCellNode {
                 alignItems: .end,
                 children: Array.filterNils(from: isOutgoing ? [bubbleNode, avatarImageNode] : [avatarImageNode, bubbleNode])),
             (bottomTextNode != nil)
-                ? ASInsetLayoutSpec(insets: UIEdgeInsetsMake(5, 0, 0, 0), child: bottomTextNode!)
+                ? ASInsetLayoutSpec(insets: UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 0), child: bottomTextNode!)
                 : nil]
         return ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(1, 4, 1, 4),
+            insets: UIEdgeInsets(top: 1, left: 4, bottom: 1, right: 4),
             child: ASStackLayoutSpec(
                 direction: .vertical,
                 spacing: 0,

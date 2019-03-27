@@ -11,8 +11,8 @@ import UIKit
 public class MessageTimestampFormatter {
     
     private let dateFormatter: DateFormatter
-    private let dateTextAttributes: [String: AnyObject]
-    private let timeTextAttributes: [String: AnyObject]
+    private let dateTextAttributes: [NSAttributedString.Key: AnyObject]
+    private let timeTextAttributes: [NSAttributedString.Key: AnyObject]
     
     public init() {
         dateFormatter = DateFormatter()
@@ -22,13 +22,13 @@ public class MessageTimestampFormatter {
         let color = UIColor.lightGray
         
         dateTextAttributes = [
-            NSFontAttributeName: UIFont.boldSystemFont(ofSize: 12),
-            NSForegroundColorAttributeName: color
+            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 12),
+            NSAttributedString.Key.foregroundColor: color
         ]
         
         timeTextAttributes = [
-            NSFontAttributeName: UIFont.systemFont(ofSize: 12),
-            NSForegroundColorAttributeName: color
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+            NSAttributedString.Key.foregroundColor: color
         ]
     }
     

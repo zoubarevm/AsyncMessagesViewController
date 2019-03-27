@@ -9,11 +9,11 @@
 import UIKit
 import AsyncDisplayKit
 
-private let kAMMessageTextBubbleNodeIncomingTextAttributes = [NSForegroundColorAttributeName: UIColor.black,
-                                                              NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
-private let kAMMessageTextBubbleNodeOutgoingTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
-                                                              NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
-public typealias TextAttributes = [String : AnyObject];
+public let kAMMessageTextBubbleNodeIncomingTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black,
+                                                              NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
+public let kAMMessageTextBubbleNodeOutgoingTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                              NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
+public typealias TextAttributes = [NSAttributedString.Key : AnyObject];
 
 public class MessageTextBubbleNodeFactory: MessageBubbleNodeFactory {
     
