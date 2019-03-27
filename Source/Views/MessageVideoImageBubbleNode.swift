@@ -9,8 +9,8 @@
 import UIKit
 import AsyncDisplayKit
 
-private let defaultVideoTextBubbleNodeOutgoingTextAttributes = [NSForegroundColorAttributeName: UIColor.white,
-                                                                NSFontAttributeName: UIFont.systemFont(ofSize: 14)]
+public let defaultVideoTextBubbleNodeOutgoingTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white,
+                                                                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)]
 
 
 public class MessageVideoBubbleNodeFactory: MessageBubbleNodeFactory {
@@ -121,11 +121,11 @@ open class MessageVideoImageBubbleNode: ASDisplayNode {
     override open func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         let textNodeVerticalOffset = CGFloat(6)
         let buttonNodeLayout = ASInsetLayoutSpec(
-            insets: UIEdgeInsetsMake(
-                12,
-                12 + (isOutgoing ? 0 : textNodeVerticalOffset),
-                12,
-                12 + (isOutgoing ? textNodeVerticalOffset : 0)),
+            insets: UIEdgeInsets(
+                top: 12,
+                left:12 + (isOutgoing ? 0 : textNodeVerticalOffset),
+                bottom:12,
+                right:12 + (isOutgoing ? textNodeVerticalOffset : 0)),
             child: buttonNode)
         
         return ASBackgroundLayoutSpec(

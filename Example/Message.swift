@@ -30,6 +30,10 @@ class Message: MessageData {
         return _content
     }
     
+    @objc func content() -> String {
+        return _date
+    }
+    
     @objc func date() -> Date {
         return _date
     }

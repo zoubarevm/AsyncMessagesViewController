@@ -44,10 +44,10 @@ private class MessageNode: ASDisplayNode {
 
             
             activityView.addSubview(loader)
-            let horizontalConstraint = NSLayoutConstraint(item: loader, attribute: NSLayoutAttribute.centerX, relatedBy: NSLayoutRelation.equal, toItem: activityView, attribute: NSLayoutAttribute.centerX, multiplier: 1, constant: 0)
+            let horizontalConstraint = NSLayoutConstraint(item: loader, attribute: NSLayoutConstraint.Attribute.centerX, relatedBy: NSLayoutConstraint.Relation.equal, toItem: activityView, attribute: NSLayoutConstraint.Attribute.centerX, multiplier: 1, constant: 0)
             activityView.addConstraint(horizontalConstraint)
 
-            let verticalConstraint = NSLayoutConstraint(item: loader, attribute: NSLayoutAttribute.centerY, relatedBy: NSLayoutRelation.equal, toItem: activityView, attribute: NSLayoutAttribute.centerY, multiplier: 1, constant: 0)
+            let verticalConstraint = NSLayoutConstraint(item: loader, attribute: NSLayoutConstraint.Attribute.centerY, relatedBy: NSLayoutConstraint.Relation.equal, toItem: activityView, attribute: NSLayoutConstraint.Attribute.centerY, multiplier: 1, constant: 0)
             activityView.addConstraint(verticalConstraint)
             loader.startAnimating()
             
@@ -101,11 +101,11 @@ open class MessagePendingMediaBubbleNode: ASDisplayNode {
         
         return ASBackgroundLayoutSpec(
             child: ASInsetLayoutSpec(
-                insets: UIEdgeInsetsMake(
-                    12,
-                    12 + (isOutgoing ? 0 : textNodeVerticalOffset),
-                    12,
-                    12 + (isOutgoing ? textNodeVerticalOffset : 0)),
+                insets: UIEdgeInsets(
+                    top: 12,
+                    left: 12 + (isOutgoing ? 0 : textNodeVerticalOffset),
+                    bottom: 12,
+                    right: 12 + (isOutgoing ? textNodeVerticalOffset : 0)),
                 child: buttonNode),
             background: bubbleImageNode)
         //        return ASBackgroundLayoutSpec(child: textNode, background: bubbleImageNode)

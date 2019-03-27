@@ -30,7 +30,7 @@ open class AsyncMessagesViewController: SLKTextViewController {
         
         layout = UICollectionViewFlowLayout()
         
-        layout.scrollDirection = UICollectionViewScrollDirection.vertical
+        layout.scrollDirection = UICollectionView.ScrollDirection.vertical
         layout.minimumLineSpacing = 1
         
         
@@ -39,7 +39,7 @@ open class AsyncMessagesViewController: SLKTextViewController {
         
         asyncCollectionView.backgroundColor = UIColor.white
         asyncCollectionView.scrollsToTop = true
-        asyncCollectionNode.registerSupplementaryNode(ofKind: UICollectionElementKindSectionHeader)
+        asyncCollectionNode.registerSupplementaryNode(ofKind: UICollectionView.elementKindSectionHeader)
         
         asyncCollectionNode.dataSource = dataSource
         asyncCollectionNode.delegate = delegate
@@ -92,7 +92,7 @@ open class AsyncMessagesViewController: SLKTextViewController {
     }
 
     override open func viewWillLayoutSubviews() {
-        let insets = UIEdgeInsetsMake(topLayoutGuide.length, 0, 5, 0)
+        let insets = UIEdgeInsets(top: topLayoutGuide.length, left: 0, bottom: 5, right: 0)
         asyncCollectionNode.contentInset = insets
         collectionView.scrollIndicatorInsets = insets
 

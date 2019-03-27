@@ -76,7 +76,7 @@ public class MediaUtils {
             let asset = AVAsset(url: URL(string: videoUrlString)!)
             let assetImgGenerate = AVAssetImageGenerator(asset: asset)
             assetImgGenerate.appliesPreferredTrackTransform = true
-            let time = CMTimeMakeWithSeconds(Float64(1), 100)
+            let time = CMTimeMakeWithSeconds(Float64(1), preferredTimescale: 100)
             do {
                 let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
                 let thumbnail = UIImage(cgImage: img)
@@ -98,7 +98,7 @@ public class MediaUtils {
             
             let fileURL = libraryDirectory.appendingPathComponent(fileName)
             
-            if let imageData = UIImageJPEGRepresentation(imageToSave, 1){
+            if let imageData = imageToSave.jpegData(compressionQuality: 1) {
                 try imageData.write(to: fileURL)
                 print("image was succesfully saved");
                 // in the future now, you can just check the cached folder for the image;
